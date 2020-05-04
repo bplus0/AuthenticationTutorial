@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Authorization
+
+
+@inject IAuthorizationService AuthorizationService
+@{
+
+}
+
+
+<h1>
+
+
+    Yo!! Home
+</h1>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>user is authenticated</h1>
+}
+else
+{
+    <h1>User is not authenticated</h1>
+}
+
+
+@if ((await AuthorizationService.AuthorizeAsync(User, "Claim.Dob")).Succeeded)
+{
+    <h1>user has claim</h1>
+}
