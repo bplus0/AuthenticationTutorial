@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Server
 {
@@ -16,13 +12,11 @@ namespace Server
   {
     public void ConfigureServices(IServiceCollection services)
     {
-
       services.AddAuthentication("OAuth")
         .AddJwtBearer("OAuth", config =>
         {
           var secretBytes = Encoding.UTF8.GetBytes(Constants.Secret);
           var key = new SymmetricSecurityKey(secretBytes);
-
 
           // how to pass the bearer token in a url
           config.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents()
@@ -40,7 +34,7 @@ namespace Server
 
           config.TokenValidationParameters = new TokenValidationParameters()
           {
-            ValidIssuer=Constants.Issuer,
+            ValidIssuer = Constants.Issuer,
             ValidAudience = Constants.Audiance,
             IssuerSigningKey = key
           };
@@ -48,8 +42,7 @@ namespace Server
 
       services.AddControllersWithViews(config =>
       {
-
-      }).AddRazorRuntimeCompilation()  ;
+      }).AddRazorRuntimeCompilation();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +60,6 @@ namespace Server
 
       //are you allowed
       app.UseAuthorization();
-
 
       app.UseEndpoints(endpoints =>
       {
